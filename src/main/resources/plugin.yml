@@ -1,5 +1,5 @@
 name: ExamplePonderPlugin
-version: 0.2
+version: '${project.version}'
 main: dansplugins.playerlore.ExamplePonderPlugin
 api-version: 1.13
 

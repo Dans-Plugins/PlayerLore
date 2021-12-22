@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public final class PlayerLore extends AbstractPonderPlugin {
     private static PlayerLore instance;
-    private final String version = "v0.2";
+    private final String pluginVersion = "v" + getDescription().getVersion();
 
     public static PlayerLore getInstance() {
         return instance;
@@ -58,7 +58,7 @@ public final class PlayerLore extends AbstractPonderPlugin {
     }
 
     public String getVersion() {
-        return version;
+        return pluginVersion;
     }
 
     public boolean isVersionMismatched() {
