@@ -14,6 +14,7 @@ public class DefaultCommand extends AbstractCommand {
     public boolean execute(CommandSender commandSender) {
         commandSender.sendMessage(ChatColor.AQUA + "PlayerLore " + PlayerLore.getInstance().getVersion());
         commandSender.sendMessage(ChatColor.AQUA + "Developed by: Daniel Stephenson");
+        commandSender.sendMessage(ChatColor.AQUA + "Requested by: Rochelle");
         commandSender.sendMessage(ChatColor.AQUA + "Wiki: https://github.com/dmccoystephenson/PlayerLore/wiki");
         return true;
     }
