@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public final class PlayerLore extends AbstractPonderPlugin {
     private static PlayerLore instance;
-    private final String version = "v0.2-alpha-1";
+    private final String version = "v0.1";
 
     public static PlayerLore getInstance() {
         return instance;
