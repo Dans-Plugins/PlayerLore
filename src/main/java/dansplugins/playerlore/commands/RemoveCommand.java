@@ -23,8 +23,7 @@ public class RemoveCommand extends AbstractCommand {
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage(ChatColor.RED + "This command isn't implemented yet.");
-        // TODO: implement
+        commandSender.sendMessage(ChatColor.RED + "Usage: /pl remove (lineNumber)");
         return false;
     }
 

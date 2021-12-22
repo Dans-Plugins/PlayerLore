@@ -23,8 +23,7 @@ public class EditCommand extends AbstractCommand {
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage(ChatColor.RED + "This command isn't implemented yet.");
-        // TODO: implement
+        commandSender.sendMessage(ChatColor.RED + "Usage: /pl edit (lineNumber) \"new line of lore\"");
         return false;
     }
 
