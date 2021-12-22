@@ -16,6 +16,8 @@ public class DefaultCommand extends AbstractCommand {
         commandSender.sendMessage(ChatColor.AQUA + "Developed by: Daniel Stephenson");
         commandSender.sendMessage(ChatColor.AQUA + "Requested by: Rochelle");
         commandSender.sendMessage(ChatColor.AQUA + "Wiki: https://github.com/dmccoystephenson/PlayerLore/wiki");
+        commandSender.sendMessage("");
+        commandSender.sendMessage(ChatColor.AQUA + "For a list of commands, type /lp help");
         return true;
     }
 
