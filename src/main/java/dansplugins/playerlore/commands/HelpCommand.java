@@ -24,7 +24,7 @@ public class HelpCommand extends AbstractCommand {
     @Override
     public boolean execute(CommandSender commandSender) {
         commandSender.sendMessage(ChatColor.AQUA + "/pl help");
-        commandSender.sendMessage(ChatColor.RED + "/pl add \"line of lore\" - Add a line of lore to an item.");
+        commandSender.sendMessage(ChatColor.AQUA + "/pl add \"line of lore\" - Add a line of lore to an item.");
         commandSender.sendMessage(ChatColor.RED + "/pl edit (lineNumber) \"new line of lore\" - Edit a line of lore of an item.");
         commandSender.sendMessage(ChatColor.RED + "/pl remove (lineNumber) - Remove a line of lore from an item.");
         return true;
