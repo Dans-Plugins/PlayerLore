@@ -1,7 +1,6 @@
 package dansplugins.playerlore;
 
-import dansplugins.playerlore.commands.DefaultCommand;
-import dansplugins.playerlore.commands.HelpCommand;
+import dansplugins.playerlore.commands.*;
 import dansplugins.playerlore.services.LocalConfigService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -85,7 +84,10 @@ public final class PlayerLore extends AbstractPonderPlugin {
 
     private void initializeCommandService() {
         ArrayList<ICommand> commands = new ArrayList<>(Arrays.asList(
-                new HelpCommand()
+                new HelpCommand(),
+                new AddCommand(),
+                new EditCommand(),
+                new RemoveCommand()
         ));
         getPonderAPI().getCommandService().initialize(commands, "That command wasn't found.");
     }
