@@ -1,12 +1,18 @@
-name: ExamplePonderPlugin
+name: PlayerLore
 version: '${project.version}'
-main: dansplugins.playerlore.ExamplePonderPlugin
+main: dansplugins.playerlore.PlayerLore
 api-version: 1.13
 
 commands:
-  exampleponderplugin:
-  epp:
+  playerlore:
+  pl:
 
 permissions:
-  epp.help:
+  pl.help:
+    default: true
+  pl.add:
+    default: true
+  pl.edit:
+    default: true
+  pl.remove:
     default: true
