@@ -68,7 +68,7 @@ public class AddCommand extends AbstractCommand {
         if (lore == null) {
             lore = new ArrayList<>();
         }
-        lore.add(lineOfLore);
+        lore.add(ChatColor.WHITE + lineOfLore);
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 
