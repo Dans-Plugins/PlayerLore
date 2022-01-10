@@ -1,19 +1,16 @@
 package dansplugins.playerlore.services;
 
-/*
-    To add a new config option, the following methods must be altered:
-    - saveMissingConfigDefaultsIfNotPresent
-    - setConfigOption()
-    - sendConfigList()
- */
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import dansplugins.playerlore.PlayerLore;
 
 /**
- * @author Daniel Stephenson
+ * @author Daniel McCoy Stephenson
+ *     To add a new config option, the following methods must be altered:
+ *     - saveMissingConfigDefaultsIfNotPresent
+ *     - setConfigOption()
+ *     - sendConfigList()
  */
 public class LocalConfigService {
 

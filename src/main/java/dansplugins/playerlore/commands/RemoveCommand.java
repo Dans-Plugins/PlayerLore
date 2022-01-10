@@ -7,24 +7,20 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import preponderous.ponder.misc.AbstractCommand;
+import preponderous.ponder.minecraft.abs.AbstractPluginCommand;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class RemoveCommand extends AbstractCommand {
-    private ArrayList<String> names = new ArrayList<>(Collections.singletonList("remove"));
-    private ArrayList<String> permissions = new ArrayList<>(Collections.singletonList("pl.remove"));
+/**
+ * @author Daniel McCoy Stephenson
+ */
+public class RemoveCommand extends AbstractPluginCommand {
 
-    @Override
-    public ArrayList<String> getNames() {
-        return names;
-    }
-
-    @Override
-    public ArrayList<String> getPermissions() {
-        return permissions;
+    public RemoveCommand() {
+        super(new ArrayList<>(Arrays.asList("remove")), new ArrayList<>(Arrays.asList("pl.remove")));
     }
 
     @Override

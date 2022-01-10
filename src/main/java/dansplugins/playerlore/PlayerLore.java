@@ -4,15 +4,18 @@ import dansplugins.playerlore.commands.*;
 import dansplugins.playerlore.services.LocalConfigService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import preponderous.ponder.AbstractPonderPlugin;
-import preponderous.ponder.misc.PonderAPI_Integrator;
-import preponderous.ponder.misc.specification.ICommand;
+import preponderous.ponder.minecraft.abs.AbstractPluginCommand;
+import preponderous.ponder.minecraft.abs.PonderPlugin;
+import preponderous.ponder.minecraft.spigot.misc.PonderAPI_Integrator;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public final class PlayerLore extends AbstractPonderPlugin {
+/**
+ * @author Daniel McCoy Stephenson
+ */
+public final class PlayerLore extends PonderPlugin {
     private static PlayerLore instance;
     private final String pluginVersion = "v" + getDescription().getVersion();
 
@@ -24,7 +27,6 @@ public final class PlayerLore extends AbstractPonderPlugin {
     public void onEnable() {
         instance = this;
         ponderAPI_integrator = new PonderAPI_Integrator(this);
-        toolbox = getPonderAPI().getToolbox();
 
         // create/load config
         if (!(new File("./plugins/PlayerLore/config.yml").exists())) {
@@ -83,7 +85,7 @@ public final class PlayerLore extends AbstractPonderPlugin {
     }
 
     private void initializeCommandService() {
-        ArrayList<ICommand> commands = new ArrayList<>(Arrays.asList(
+        ArrayList<AbstractPluginCommand> commands = new ArrayList<>(Arrays.asList(
                 new HelpCommand(),
                 new AddCommand(),
                 new EditCommand(),

@@ -3,12 +3,19 @@ package dansplugins.playerlore.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import dansplugins.playerlore.PlayerLore;
-import preponderous.ponder.misc.AbstractCommand;
+import preponderous.ponder.minecraft.abs.AbstractPluginCommand;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
- * @author Daniel Stephenson
+ * @author Daniel McCoy Stephenson
  */
-public class DefaultCommand extends AbstractCommand {
+public class DefaultCommand extends AbstractPluginCommand {
+
+    public DefaultCommand() {
+        super(new ArrayList<>(Arrays.asList("default")), new ArrayList<>(Arrays.asList("pl.default")));
+    }
 
     @Override
     public boolean execute(CommandSender commandSender) {

@@ -2,6 +2,9 @@ package dansplugins.playerlore.utils;
 
 import dansplugins.playerlore.PlayerLore;
 
+/**
+ * @author Daniel McCoy Stephenson
+ */
 public class Logger {
 
     private static Logger instance;

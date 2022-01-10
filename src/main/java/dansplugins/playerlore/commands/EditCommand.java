@@ -7,24 +7,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import preponderous.ponder.misc.AbstractCommand;
+import preponderous.ponder.minecraft.abs.AbstractPluginCommand;
+import preponderous.ponder.misc.ArgumentParser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class EditCommand extends AbstractCommand {
-    private ArrayList<String> names = new ArrayList<>(Collections.singletonList("edit"));
-    private ArrayList<String> permissions = new ArrayList<>(Collections.singletonList("pl.edit"));
+/**
+ * @author Daniel McCoy Stephenson
+ */
+public class EditCommand extends AbstractPluginCommand {
 
-    @Override
-    public ArrayList<String> getNames() {
-        return names;
-    }
-
-    @Override
-    public ArrayList<String> getPermissions() {
-        return permissions;
+    public EditCommand() {
+        super(new ArrayList<>(Arrays.asList("edit")), new ArrayList<>(Arrays.asList("pl.edit")));
     }
 
     @Override
@@ -45,7 +42,8 @@ public class EditCommand extends AbstractCommand {
         int lineIndex = Integer.parseInt(args[0]);
 
         // get line of lore
-        ArrayList<String> doubleQuoteArgs = PlayerLore.getInstance().getToolbox().getArgumentParser().getArgumentsInsideDoubleQuotes(args);
+        ArgumentParser argumentParser = new ArgumentParser();
+        ArrayList<String> doubleQuoteArgs = argumentParser.getArgumentsInsideDoubleQuotes(args);
         if (doubleQuoteArgs.size() == 0) {
             player.sendMessage(ChatColor.RED + "Line of lore must be designated between double quotes.");
             return false;
