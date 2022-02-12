@@ -2,6 +2,8 @@ package dansplugins.playerlore.utils;
 
 import dansplugins.playerlore.PlayerLore;
 
+import java.util.logging.Level;
+
 /**
  * @author Daniel McCoy Stephenson
  */
@@ -22,8 +24,7 @@ public class Logger {
 
     public void log(String message) {
         if (PlayerLore.getInstance().isDebugEnabled()) {
-            System.out.println("[PlayerLore] " + message);
+            PlayerLore.getInstance().getLogger().log(Level.INFO, "[PlayerLore] " + message);
         }
     }
-
 }

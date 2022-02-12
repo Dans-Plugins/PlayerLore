@@ -1,6 +1,5 @@
 package dansplugins.playerlore.commands;
 
-import dansplugins.playerlore.PlayerLore;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,6 @@ import preponderous.ponder.misc.ArgumentParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
