@@ -1,17 +1,18 @@
 package dansplugins.playerlore.commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import preponderous.ponder.minecraft.abs.AbstractPluginCommand;
-import preponderous.ponder.misc.ArgumentParser;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
+import preponderous.ponder.misc.ArgumentParser;
 
 /**
  * @author Daniel McCoy Stephenson

@@ -1,9 +1,10 @@
 package dansplugins.playerlore.services;
 
-import dansplugins.playerlore.PlayerLore;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import dansplugins.playerlore.PlayerLore;
 
 /**
  * @author Daniel McCoy Stephenson
