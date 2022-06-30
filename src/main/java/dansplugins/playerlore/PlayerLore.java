@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import dansplugins.playerlore.services.ConfigService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -12,7 +13,6 @@ import dansplugins.playerlore.commands.DefaultCommand;
 import dansplugins.playerlore.commands.EditCommand;
 import dansplugins.playerlore.commands.HelpCommand;
 import dansplugins.playerlore.commands.RemoveCommand;
-import dansplugins.playerlore.services.LocalConfigService;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
@@ -21,24 +21,16 @@ import preponderous.ponder.minecraft.bukkit.services.CommandService;
  * @author Daniel McCoy Stephenson
  */
 public final class PlayerLore extends PonderBukkitPlugin {
-    private static PlayerLore instance;
     private final String pluginVersion = "v" + getDescription().getVersion();
-    private final CommandService commandService = new CommandService(getPonder());
 
-    /**
-     * This can be used to get the instance of the main class that is managed by itself.
-     * @return The managed instance of the main class.
-     */
-    public static PlayerLore getInstance() {
-        return instance;
-    }
+    private final CommandService commandService = new CommandService(getPonder());
+    private final ConfigService configService = new ConfigService(this);
 
     /**
      * This runs when the server starts.
      */
     @Override
     public void onEnable() {
-        instance = this;
         initializeConfig();
         registerEventHandlers();
         initializeCommandService();
@@ -63,7 +55,7 @@ public final class PlayerLore extends PonderBukkitPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
-            DefaultCommand defaultCommand = new DefaultCommand();
+            DefaultCommand defaultCommand = new DefaultCommand(this);
             return defaultCommand.execute(sender);
         }
 
@@ -96,7 +88,7 @@ public final class PlayerLore extends PonderBukkitPlugin {
      * @return Whether debug is enabled.
      */
     public boolean isDebugEnabled() {
-        return LocalConfigService.getInstance().getBoolean("debugMode");
+        return configService.getBoolean("debugMode");
     }
 
     private void initializeConfig() {
@@ -104,7 +96,7 @@ public final class PlayerLore extends PonderBukkitPlugin {
             performCompatibilityChecks();
         }
         else {
-            LocalConfigService.getInstance().saveMissingConfigDefaultsIfNotPresent();
+            configService.saveMissingConfigDefaultsIfNotPresent();
         }
     }
 
@@ -114,7 +106,7 @@ public final class PlayerLore extends PonderBukkitPlugin {
 
     private void performCompatibilityChecks() {
         if (isVersionMismatched()) {
-            LocalConfigService.getInstance().saveMissingConfigDefaultsIfNotPresent();
+            configService.saveMissingConfigDefaultsIfNotPresent();
         }
         reloadConfig();
     }

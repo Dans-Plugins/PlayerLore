@@ -13,35 +13,28 @@ import dansplugins.playerlore.PlayerLore;
  *     - setConfigOption()
  *     - sendConfigList()
  */
-public class LocalConfigService {
+public class ConfigService {
+    private final PlayerLore playerLore;
 
-    private static LocalConfigService instance;
     private boolean altered = false;
 
-    private LocalConfigService() {
-
-    }
-
-    public static LocalConfigService getInstance() {
-        if (instance == null) {
-            instance = new LocalConfigService();
-        }
-        return instance;
+    public ConfigService(PlayerLore playerLore) {
+        this.playerLore = playerLore;
     }
 
     public void saveMissingConfigDefaultsIfNotPresent() {
         // set version
         if (!getConfig().isString("version")) {
-            getConfig().addDefault("version", PlayerLore.getInstance().getVersion());
+            getConfig().addDefault("version", playerLore.getVersion());
         } else {
-            getConfig().set("version", PlayerLore.getInstance().getVersion());
+            getConfig().set("version", playerLore.getVersion());
         }
 
         // save config options
         if (!isSet("debugMode")) { getConfig().set("debugMode", false); }
 
         getConfig().options().copyDefaults(true);
-        PlayerLore.getInstance().saveConfig();
+        playerLore.saveConfig();
     }
 
     public void setConfigOption(String option, String value, CommandSender sender) {
@@ -64,7 +57,7 @@ public class LocalConfigService {
             }
 
             // save
-            PlayerLore.getInstance().saveConfig();
+            playerLore.saveConfig();
             altered = true;
         } else {
             sender.sendMessage(ChatColor.RED + "That config option wasn't found.");
@@ -82,7 +75,7 @@ public class LocalConfigService {
     }
 
     public FileConfiguration getConfig() {
-        return PlayerLore.getInstance().getConfig();
+        return playerLore.getConfig();
     }
 
     public boolean isSet(String option) {
