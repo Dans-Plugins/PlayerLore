@@ -13,14 +13,16 @@ import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
  * @author Daniel McCoy Stephenson
  */
 public class DefaultCommand extends AbstractPluginCommand {
+    private final PlayerLore playerLore;
 
-    public DefaultCommand() {
+    public DefaultCommand(PlayerLore playerLore) {
         super(new ArrayList<>(Arrays.asList("default")), new ArrayList<>(Arrays.asList("pl.default")));
+        this.playerLore = playerLore;
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage(ChatColor.AQUA + "PlayerLore " + PlayerLore.getInstance().getVersion());
+        commandSender.sendMessage(ChatColor.AQUA + "PlayerLore " + playerLore.getVersion());
         commandSender.sendMessage(ChatColor.AQUA + "Developed by: Daniel Stephenson");
         commandSender.sendMessage(ChatColor.AQUA + "Requested by: Rochelle");
         commandSender.sendMessage(ChatColor.AQUA + "Wiki: https://github.com/dmccoystephenson/PlayerLore/wiki");

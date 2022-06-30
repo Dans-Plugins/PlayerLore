@@ -8,23 +8,15 @@ import java.util.logging.Level;
  * @author Daniel McCoy Stephenson
  */
 public class Logger {
+    private final PlayerLore playerLore;
 
-    private static Logger instance;
-
-    private Logger() {
-
-    }
-
-    public static Logger getInstance() {
-        if (instance == null) {
-            instance = new Logger();
-        }
-        return instance;
+    public Logger(PlayerLore playerLore) {
+        this.playerLore = playerLore;
     }
 
     public void log(String message) {
-        if (PlayerLore.getInstance().isDebugEnabled()) {
-            PlayerLore.getInstance().getLogger().log(Level.INFO, "[PlayerLore] " + message);
+        if (playerLore.isDebugEnabled()) {
+            playerLore.getLogger().log(Level.INFO, "[PlayerLore] " + message);
         }
     }
 }
