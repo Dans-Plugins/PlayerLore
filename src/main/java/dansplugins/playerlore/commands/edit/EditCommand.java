@@ -1,8 +1,4 @@
-package dansplugins.playerlore.commands;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package dansplugins.playerlore.commands.edit;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,21 +6,25 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
+import preponderous.ponder.misc.ArgumentParser;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Daniel McCoy Stephenson
  */
-public class RemoveCommand extends AbstractPluginCommand {
+public class EditCommand extends AbstractPluginCommand {
 
-    public RemoveCommand() {
-        super(new ArrayList<>(Arrays.asList("remove")), new ArrayList<>(Arrays.asList("pl.remove")));
+    public EditCommand() {
+        super(new ArrayList<>(Arrays.asList("edit")), new ArrayList<>(Arrays.asList("pl.edit")));
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage(ChatColor.RED + "Usage: /pl remove (lineIndex)");
+        commandSender.sendMessage(ChatColor.RED + "Usage: /pl edit (lineIndex) \"new line of lore\"");
         return false;
     }
 
@@ -38,6 +38,15 @@ public class RemoveCommand extends AbstractPluginCommand {
 
         // get line to edit
         int lineIndex = Integer.parseInt(args[0]);
+
+        // get line of lore
+        ArgumentParser argumentParser = new ArgumentParser();
+        ArrayList<String> doubleQuoteArgs = argumentParser.getArgumentsInsideDoubleQuotes(args);
+        if (doubleQuoteArgs.size() == 0) {
+            player.sendMessage(ChatColor.RED + "Line of lore must be designated between double quotes.");
+            return false;
+        }
+        String lineOfLore = doubleQuoteArgs.get(0);
 
         // get item
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -64,11 +73,11 @@ public class RemoveCommand extends AbstractPluginCommand {
             return false;
         }
 
-        lore.remove(lineIndex);
+        lore.set(lineIndex, ChatColor.WHITE + lineOfLore);
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 
-        player.sendMessage(ChatColor.GREEN + "Line removed.");
+        player.sendMessage(ChatColor.GREEN + "Line edited.");
         return true;
     }
 }

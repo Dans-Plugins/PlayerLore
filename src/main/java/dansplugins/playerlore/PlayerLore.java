@@ -1,21 +1,19 @@
 package dansplugins.playerlore;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import dansplugins.playerlore.services.ConfigService;
+import dansplugins.playerlore.commands.add.AddCommand;
+import dansplugins.playerlore.commands.defaultcommand.DefaultCommand;
+import dansplugins.playerlore.commands.edit.EditCommand;
+import dansplugins.playerlore.commands.help.HelpCommand;
+import dansplugins.playerlore.commands.remove.RemoveCommand;
+import dansplugins.playerlore.bstats.Metrics;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
-import dansplugins.playerlore.commands.AddCommand;
-import dansplugins.playerlore.commands.DefaultCommand;
-import dansplugins.playerlore.commands.EditCommand;
-import dansplugins.playerlore.commands.HelpCommand;
-import dansplugins.playerlore.commands.RemoveCommand;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -24,16 +22,16 @@ public final class PlayerLore extends PonderBukkitPlugin {
     private final String pluginVersion = "v" + getDescription().getVersion();
 
     private final CommandService commandService = new CommandService(getPonder());
-    private final ConfigService configService = new ConfigService(this);
 
     /**
      * This runs when the server starts.
      */
     @Override
     public void onEnable() {
-        initializeConfig();
-        registerEventHandlers();
         initializeCommandService();
+
+        int pluginId = 17025;
+        new Metrics(this, pluginId);
     }
 
     /**
@@ -68,57 +66,6 @@ public final class PlayerLore extends PonderBukkitPlugin {
      */
     public String getVersion() {
         return pluginVersion;
-    }
-
-    /**
-     * Checks if the version is mismatched.
-     * @return A boolean indicating if the version is mismatched.
-     */
-    public boolean isVersionMismatched() {
-        String configVersion = this.getConfig().getString("version");
-        if (configVersion == null || this.getVersion() == null) {
-            return false;
-        } else {
-            return !configVersion.equalsIgnoreCase(this.getVersion());
-        }
-    }
-
-    /**
-     * Checks if debug is enabled.
-     * @return Whether debug is enabled.
-     */
-    public boolean isDebugEnabled() {
-        return configService.getBoolean("debugMode");
-    }
-
-    private void initializeConfig() {
-        if (configFileExists()) {
-            performCompatibilityChecks();
-        }
-        else {
-            configService.saveMissingConfigDefaultsIfNotPresent();
-        }
-    }
-
-    private boolean configFileExists() {
-        return new File("./plugins/" + getName() + "/config.yml").exists();
-    }
-
-    private void performCompatibilityChecks() {
-        if (isVersionMismatched()) {
-            configService.saveMissingConfigDefaultsIfNotPresent();
-        }
-        reloadConfig();
-    }
-
-    /**
-     * Registers the event handlers of the plugin using Ponder.
-     */
-    private void registerEventHandlers() {
-        /*
-        ArrayList<Listener> listeners = new ArrayList<>();
-        getToolbox().getEventHandlerRegistry().registerEventHandlers(listeners, this);
-        */
     }
 
     /**

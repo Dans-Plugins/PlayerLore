@@ -1,8 +1,4 @@
-package dansplugins.playerlore.commands;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package dansplugins.playerlore.commands.add;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,22 +6,25 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.misc.ArgumentParser;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Daniel McCoy Stephenson
  */
-public class EditCommand extends AbstractPluginCommand {
+public class AddCommand extends AbstractPluginCommand {
 
-    public EditCommand() {
-        super(new ArrayList<>(Arrays.asList("edit")), new ArrayList<>(Arrays.asList("pl.edit")));
+    public AddCommand() {
+        super(new ArrayList<>(Arrays.asList("add")), new ArrayList<>(Arrays.asList("pl.add")));
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage(ChatColor.RED + "Usage: /pl edit (lineIndex) \"new line of lore\"");
+        commandSender.sendMessage(ChatColor.RED + "Usage: /pl add \"line of lore\"");
         return false;
     }
 
@@ -36,9 +35,6 @@ public class EditCommand extends AbstractPluginCommand {
             return false;
         }
         Player player = (Player) commandSender;
-
-        // get line to edit
-        int lineIndex = Integer.parseInt(args[0]);
 
         // get line of lore
         ArgumentParser argumentParser = new ArgumentParser();
@@ -68,17 +64,11 @@ public class EditCommand extends AbstractPluginCommand {
         if (lore == null) {
             lore = new ArrayList<>();
         }
-
-        if (lineIndex >= lore.size()) {
-            player.sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
-            return false;
-        }
-
-        lore.set(lineIndex, ChatColor.WHITE + lineOfLore);
+        lore.add(ChatColor.WHITE + lineOfLore);
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 
-        player.sendMessage(ChatColor.GREEN + "Line edited.");
+        player.sendMessage(ChatColor.GREEN + "Lore added.");
         return true;
     }
 }
