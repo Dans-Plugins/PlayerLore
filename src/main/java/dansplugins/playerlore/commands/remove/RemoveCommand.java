@@ -1,8 +1,4 @@
-package dansplugins.playerlore.commands;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package dansplugins.playerlore.commands.remove;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,22 +6,24 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
-import preponderous.ponder.misc.ArgumentParser;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Daniel McCoy Stephenson
  */
-public class AddCommand extends AbstractPluginCommand {
+public class RemoveCommand extends AbstractPluginCommand {
 
-    public AddCommand() {
-        super(new ArrayList<>(Arrays.asList("add")), new ArrayList<>(Arrays.asList("pl.add")));
+    public RemoveCommand() {
+        super(new ArrayList<>(Arrays.asList("remove")), new ArrayList<>(Arrays.asList("pl.remove")));
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage(ChatColor.RED + "Usage: /pl add \"line of lore\"");
+        commandSender.sendMessage(ChatColor.RED + "Usage: /pl remove (lineIndex)");
         return false;
     }
 
@@ -37,14 +35,8 @@ public class AddCommand extends AbstractPluginCommand {
         }
         Player player = (Player) commandSender;
 
-        // get line of lore
-        ArgumentParser argumentParser = new ArgumentParser();
-        ArrayList<String> doubleQuoteArgs = argumentParser.getArgumentsInsideDoubleQuotes(args);
-        if (doubleQuoteArgs.size() == 0) {
-            player.sendMessage(ChatColor.RED + "Line of lore must be designated between double quotes.");
-            return false;
-        }
-        String lineOfLore = doubleQuoteArgs.get(0);
+        // get line to edit
+        int lineIndex = Integer.parseInt(args[0]);
 
         // get item
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -65,11 +57,17 @@ public class AddCommand extends AbstractPluginCommand {
         if (lore == null) {
             lore = new ArrayList<>();
         }
-        lore.add(ChatColor.WHITE + lineOfLore);
+
+        if (lineIndex >= lore.size()) {
+            player.sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
+            return false;
+        }
+
+        lore.remove(lineIndex);
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 
-        player.sendMessage(ChatColor.GREEN + "Lore added.");
+        player.sendMessage(ChatColor.GREEN + "Line removed.");
         return true;
     }
 }

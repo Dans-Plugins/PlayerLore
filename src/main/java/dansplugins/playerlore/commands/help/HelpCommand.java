@@ -1,12 +1,11 @@
-package dansplugins.playerlore.commands;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+package dansplugins.playerlore.commands.help;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Daniel McCoy Stephenson
