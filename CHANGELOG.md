@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+- `/pl edit` and `/pl remove` now treat `lineIndex` as 1-based, matching `COMMANDS.md`/`USER_GUIDE.md`, instead of silently indexing into the lore list as 0-based
+- `/pl edit` and `/pl remove` no longer throw an uncaught exception when given a non-numeric index or no index at all; they now send a player-facing error message
+- The default (no-argument) command no longer tells players to type the non-existent `/lp help`; it now correctly says `/pl help`
+
 ## [1.1]
 
 ### Added

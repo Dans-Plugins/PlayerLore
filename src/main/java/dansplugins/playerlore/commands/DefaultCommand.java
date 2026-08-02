@@ -27,7 +27,7 @@ public class DefaultCommand extends AbstractPluginCommand {
         commandSender.sendMessage(ChatColor.AQUA + "Requested by: Rochelle");
         commandSender.sendMessage(ChatColor.AQUA + "Wiki: https://github.com/dmccoystephenson/PlayerLore/wiki");
         commandSender.sendMessage("");
-        commandSender.sendMessage(ChatColor.AQUA + "For a list of commands, type /lp help");
+        commandSender.sendMessage(ChatColor.AQUA + "For a list of commands, type /pl help");
         return true;
     }
 
