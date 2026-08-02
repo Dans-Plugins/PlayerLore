@@ -38,7 +38,18 @@ public class EditCommand extends AbstractPluginCommand {
         Player player = (Player) commandSender;
 
         // get line to edit
-        int lineIndex = Integer.parseInt(args[0]);
+        if (args.length == 0) {
+            player.sendMessage(ChatColor.RED + "Usage: /pl edit (lineIndex) \"new line of lore\"");
+            return false;
+        }
+
+        int lineIndex;
+        try {
+            lineIndex = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            player.sendMessage(ChatColor.RED + "Line index must be a number.");
+            return false;
+        }
 
         // get line of lore
         ArgumentParser argumentParser = new ArgumentParser();
@@ -69,12 +80,12 @@ public class EditCommand extends AbstractPluginCommand {
             lore = new ArrayList<>();
         }
 
-        if (lineIndex >= lore.size()) {
+        if (lineIndex < 1 || lineIndex > lore.size()) {
             player.sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
             return false;
         }
 
-        lore.set(lineIndex, ChatColor.WHITE + lineOfLore);
+        lore.set(lineIndex - 1, ChatColor.WHITE + lineOfLore);
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 

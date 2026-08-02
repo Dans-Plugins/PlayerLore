@@ -37,7 +37,18 @@ public class RemoveCommand extends AbstractPluginCommand {
         Player player = (Player) commandSender;
 
         // get line to edit
-        int lineIndex = Integer.parseInt(args[0]);
+        if (args.length == 0) {
+            player.sendMessage(ChatColor.RED + "Usage: /pl remove (lineIndex)");
+            return false;
+        }
+
+        int lineIndex;
+        try {
+            lineIndex = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            player.sendMessage(ChatColor.RED + "Line index must be a number.");
+            return false;
+        }
 
         // get item
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -59,12 +70,12 @@ public class RemoveCommand extends AbstractPluginCommand {
             lore = new ArrayList<>();
         }
 
-        if (lineIndex >= lore.size()) {
+        if (lineIndex < 1 || lineIndex > lore.size()) {
             player.sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
             return false;
         }
 
-        lore.remove(lineIndex);
+        lore.remove(lineIndex - 1);
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
 
