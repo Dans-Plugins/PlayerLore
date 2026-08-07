@@ -1,7 +1,6 @@
 package dansplugins.playerlore.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -66,9 +65,11 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_missingArgs_throwsInsteadOfSendingUsageMessage() {
-        // Unlike EditCommand/RemoveCommand, AddCommand has no args.length guard before parsing (see #10).
-        assertThrows(IllegalArgumentException.class, () -> addCommand.execute(player, new String[]{}));
+    public void execute_rejectsMissingArgs() {
+        boolean result = addCommand.execute(player, new String[]{});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Usage: /pl add \"line of lore\"");
     }
 
     @Test

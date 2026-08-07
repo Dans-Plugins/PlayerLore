@@ -38,6 +38,11 @@ public class AddCommand extends AbstractPluginCommand {
         Player player = (Player) commandSender;
 
         // get line of lore
+        if (args.length == 0) {
+            player.sendMessage(ChatColor.RED + "Usage: /pl add \"line of lore\"");
+            return false;
+        }
+
         ArgumentParser argumentParser = new ArgumentParser();
         ArrayList<String> doubleQuoteArgs = argumentParser.getArgumentsInsideDoubleQuotes(args);
         if (doubleQuoteArgs.size() == 0) {
