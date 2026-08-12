@@ -2,6 +2,8 @@ package dansplugins.playerlore.services;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -39,7 +41,8 @@ public class ConfigServiceTest {
         configService.setConfigOption("debugMode", "true", sender);
 
         verify(sender).sendMessage(ChatColor.RED + "That config option wasn't found.");
-        verify(config, never()).set("debugMode", true);
+        verify(config, never()).set(anyString(), any());
+        verify(playerLore, never()).saveConfig();
         assertFalse(configService.hasBeenAltered());
     }
 
@@ -50,7 +53,8 @@ public class ConfigServiceTest {
         configService.setConfigOption("version", "9.9.9", sender);
 
         verify(sender).sendMessage(ChatColor.RED + "Cannot set version.");
-        verify(config, never()).set("version", "9.9.9");
+        verify(config, never()).set(anyString(), any());
+        verify(playerLore, never()).saveConfig();
         assertFalse(configService.hasBeenAltered());
     }
 
