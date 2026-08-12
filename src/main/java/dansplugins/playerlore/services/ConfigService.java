@@ -42,15 +42,9 @@ public class ConfigService {
             if (option.equalsIgnoreCase("version")) {
                 sender.sendMessage(ChatColor.RED + "Cannot set version.");
                 return;
-            } else if (option.equalsIgnoreCase("A")) {
-                getConfig().set(option, Integer.parseInt(value));
-                sender.sendMessage(ChatColor.GREEN + "Integer set.");
             } else if (option.equalsIgnoreCase("debugMode")) {
                 getConfig().set(option, Boolean.parseBoolean(value));
                 sender.sendMessage(ChatColor.GREEN + "Boolean set.");
-            } else if (option.equalsIgnoreCase("C")) {
-                getConfig().set(option, Double.parseDouble(value));
-                sender.sendMessage(ChatColor.GREEN + "Double set.");
             } else {
                 getConfig().set(option, value);
                 sender.sendMessage(ChatColor.GREEN + "String set.");
