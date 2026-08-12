@@ -73,6 +73,14 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_rejectsArgsWithoutDoubleQuotes() {
+        boolean result = addCommand.execute(player, new String[]{"unquoted", "line"});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Line of lore must be designated between double quotes.");
+    }
+
+    @Test
     public void execute_rejectsWhenNotHoldingAnItem() {
         when(item.getType()).thenReturn(Material.AIR);
 

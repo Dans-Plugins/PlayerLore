@@ -20,4 +20,15 @@ public class DefaultCommandTest {
 
         verify(commandSender).sendMessage(contains("/pl help"));
     }
+
+    @Test
+    public void execute_advertisesTheWikiUnderTheCurrentRepositoryOwner() {
+        PlayerLore playerLore = mock(PlayerLore.class);
+        CommandSender commandSender = mock(CommandSender.class);
+        DefaultCommand defaultCommand = new DefaultCommand(playerLore);
+
+        defaultCommand.execute(commandSender);
+
+        verify(commandSender).sendMessage(contains("https://github.com/Dans-Plugins/PlayerLore/wiki"));
+    }
 }

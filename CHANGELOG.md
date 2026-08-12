@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - A `Dev Release` workflow, which republishes a rolling `dev` prerelease of `main` on every non-documentation push. This is what Dan's Plugin Manager's experimental channel installs from: `/dpm get playerlore --experimental` reads `releases/tags/dev`, so without it there is nothing for that command to download. The prerelease is unreleased, unreviewed code and is marked as such.
 
+### Removed
+
+- Two config-option branches in `ConfigService.setConfigOption` that parsed options named `A` and `C` as an integer and a double. Neither is a real config option — `CONFIG.md` and `saveMissingConfigDefaultsIfNotPresent` both list only `version` and `debugMode` — and both branches were leftovers from the plugin template this project was scaffolded from.
+
+### Fixed
+
+- The bare `/pl` command advertised a wiki URL under the plugin's former `dmccoystephenson` owner; it now points at `https://github.com/Dans-Plugins/PlayerLore/wiki`, matching every other link the project publishes.
+
 ## [2.0.0-SNAPSHOT-8-8-2026] – 2026-08-08
 
 ### Changed

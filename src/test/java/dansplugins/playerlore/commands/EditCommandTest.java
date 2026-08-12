@@ -82,6 +82,14 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_rejectsArgsWithoutDoubleQuotes() {
+        boolean result = editCommand.execute(player, new String[]{"1", "unquoted"});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Line of lore must be designated between double quotes.");
+    }
+
+    @Test
     public void execute_rejectsMissingArgs() {
         boolean result = editCommand.execute(player, new String[]{});
 
