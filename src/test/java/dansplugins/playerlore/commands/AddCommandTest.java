@@ -90,12 +90,23 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_rejectsItemWithoutMeta() {
+        when(item.getItemMeta()).thenReturn(null);
+
+        boolean result = addCommand.execute(player, new String[]{"\"new line\""});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "That item's meta information wasn't found.");
+    }
+
+    @Test
     public void execute_rejectsNonPlayerSender() {
         CommandSender commandSender = mock(CommandSender.class);
 
         boolean result = addCommand.execute(commandSender, new String[]{"\"new line\""});
 
         assertFalse(result);
+        verify(commandSender).sendMessage("This command can only be used by a player.");
     }
 
     @Test
