@@ -2,7 +2,6 @@ package dansplugins.playerlore.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -87,6 +86,17 @@ public class AddCommandTest {
         boolean result = addCommand.execute(player, new String[]{"\"new line\""});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "You aren't holding anything.");
+    }
+
+    @Test
+    public void execute_rejectsItemWithoutMeta() {
+        when(item.getItemMeta()).thenReturn(null);
+
+        boolean result = addCommand.execute(player, new String[]{"\"new line\""});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "That item's meta information wasn't found.");
     }
 
     @Test
@@ -96,6 +106,7 @@ public class AddCommandTest {
         boolean result = addCommand.execute(commandSender, new String[]{"\"new line\""});
 
         assertFalse(result);
+        verify(commandSender).sendMessage("This command can only be used by a player.");
     }
 
     @Test
@@ -103,6 +114,6 @@ public class AddCommandTest {
         boolean result = addCommand.execute(player);
 
         assertFalse(result);
-        verify(player).sendMessage(anyString());
+        verify(player).sendMessage(ChatColor.RED + "Usage: /pl add \"line of lore\"");
     }
 }

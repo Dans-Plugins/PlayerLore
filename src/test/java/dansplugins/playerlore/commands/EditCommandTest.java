@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -94,5 +95,44 @@ public class EditCommandTest {
         boolean result = editCommand.execute(player, new String[]{});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Usage: /pl edit (lineIndex) \"new line of lore\"");
+    }
+
+    @Test
+    public void execute_rejectsWhenNotHoldingAnItem() {
+        when(item.getType()).thenReturn(Material.AIR);
+
+        boolean result = editCommand.execute(player, new String[]{"1", "\"new line\""});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "You aren't holding anything.");
+    }
+
+    @Test
+    public void execute_rejectsItemWithoutMeta() {
+        when(item.getItemMeta()).thenReturn(null);
+
+        boolean result = editCommand.execute(player, new String[]{"1", "\"new line\""});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "That item's meta information wasn't found.");
+    }
+
+    @Test
+    public void execute_rejectsNonPlayerSender() {
+        CommandSender commandSender = mock(CommandSender.class);
+
+        boolean result = editCommand.execute(commandSender, new String[]{"1", "\"new line\""});
+
+        assertFalse(result);
+        verify(commandSender).sendMessage("This command can only be used by a player.");
+    }
+
+    @Test
+    public void execute_noArgs_sendsUsageMessage() {
+        boolean result = editCommand.execute(player);
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Usage: /pl edit (lineIndex) \"new line of lore\"");
     }
 }
