@@ -95,6 +95,7 @@ public class EditCommandTest {
         boolean result = editCommand.execute(player, new String[]{});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Usage: /pl edit (lineIndex) \"new line of lore\"");
     }
 
     @Test

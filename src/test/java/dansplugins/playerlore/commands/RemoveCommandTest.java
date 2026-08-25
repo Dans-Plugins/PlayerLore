@@ -85,6 +85,7 @@ public class RemoveCommandTest {
         boolean result = removeCommand.execute(player, new String[]{});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Usage: /pl remove (lineIndex)");
     }
 
     @Test

@@ -2,7 +2,6 @@ package dansplugins.playerlore.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -87,6 +86,7 @@ public class AddCommandTest {
         boolean result = addCommand.execute(player, new String[]{"\"new line\""});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "You aren't holding anything.");
     }
 
     @Test
@@ -114,6 +114,6 @@ public class AddCommandTest {
         boolean result = addCommand.execute(player);
 
         assertFalse(result);
-        verify(player).sendMessage(anyString());
+        verify(player).sendMessage(ChatColor.RED + "Usage: /pl add \"line of lore\"");
     }
 }
