@@ -18,6 +18,7 @@ public class HelpCommandTest {
         boolean result = helpCommand.execute(commandSender);
 
         assertTrue(result);
+        verify(commandSender).sendMessage(contains("/pl - View the plugin version, credits and wiki link."));
         verify(commandSender).sendMessage(contains("/pl help"));
         verify(commandSender).sendMessage(contains("/pl add"));
         verify(commandSender).sendMessage(contains("/pl edit"));
