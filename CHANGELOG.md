@@ -6,10 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Fixed
-
-- The `Dev Release` workflow now retries publishing the `dev` prerelease before giving up. The release and its tag have to be deleted and recreated for the tag to move to the new commit, and a transient API failure inside that window previously left the repository with no `dev` release at all until the workflow was re-run by hand. Each attempt now starts from a clean slate, and an exhausted retry fails loudly.
-
 ### Added
 
 - A `Dev Release` workflow, which republishes a rolling `dev` prerelease of `main` on every non-documentation push. This is what Dan's Plugin Manager's experimental channel installs from: `/dpm get playerlore --experimental` reads `releases/tags/dev`, so without it there is nothing for that command to download. The prerelease is unreleased, unreviewed code and is marked as such.
@@ -20,7 +16,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- The `Dev Release` workflow now retries publishing the `dev` prerelease before giving up. The release and its tag have to be deleted and recreated for the tag to move to the new commit, and a transient API failure inside that window previously left the repository with no `dev` release at all until the workflow was re-run by hand. Each attempt now starts from a clean slate, and an exhausted retry fails loudly.
 - The bare `/pl` command advertised a wiki URL under the plugin's former `dmccoystephenson` owner; it now points at `https://github.com/Dans-Plugins/PlayerLore/wiki`, matching every other link the project publishes.
+- The bare `/pl` command is now listed by `/pl help`, in `COMMANDS.md`, and in `USER_GUIDE.md`. It has always printed the plugin version, credits and wiki link, but was named in none of the three, so the only way to discover it was to type it.
 
 ## [2.0.0-SNAPSHOT-8-8-2026] – 2026-08-08
 

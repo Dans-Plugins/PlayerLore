@@ -13,6 +13,8 @@ PlayerLore is a Spigot plugin that lets players add, edit, and remove custom lor
 
 ## Getting Started
 
+Run `/pl` on its own at any time to view the plugin version, credits and wiki link. `/pl help` lists every command.
+
 1. Hold an item in your main hand.
 2. Add a lore line: `/pl add "This sword was forged in dragon fire."`
 3. View the item's tooltip — the lore line appears below the item name.
@@ -27,6 +29,8 @@ PlayerLore is a Spigot plugin that lets players add, edit, and remove custom lor
 | `pl.add` | `true` | Add a lore line to a held item. |
 | `pl.edit` | `true` | Edit a lore line on a held item. |
 | `pl.remove` | `true` | Remove a lore line from a held item. |
+
+The bare `/pl` command is not permission-restricted and is available to everyone.
 
 ## Support
 

@@ -19,6 +19,7 @@ public class HelpCommand extends AbstractPluginCommand {
 
     @Override
     public boolean execute(CommandSender commandSender) {
+        commandSender.sendMessage(ChatColor.AQUA + "/pl - View the plugin version, credits and wiki link.");
         commandSender.sendMessage(ChatColor.AQUA + "/pl help - View a list of commands.");
         commandSender.sendMessage(ChatColor.AQUA + "/pl add \"line of lore\" - Add a line of lore to an item.");
         commandSender.sendMessage(ChatColor.AQUA + "/pl edit (lineIndex) \"new line of lore\" - Edit a line of lore of an item.");
