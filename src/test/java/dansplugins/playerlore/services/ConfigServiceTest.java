@@ -151,13 +151,16 @@ public class ConfigServiceTest {
 
     @Test
     public void sendConfigList_printsTheVersionAndDebugModeValues() {
+        // debugMode is stubbed to "true" rather than "false" on purpose: an unstubbed boolean
+        // read would also render as "false", which would leave this assertion unable to tell
+        // the two apart.
         when(config.getString("version")).thenReturn("v2.0.0");
-        when(config.getString("debugMode")).thenReturn("false");
+        when(config.getString("debugMode")).thenReturn("true");
 
         configService.sendConfigList(sender);
 
         verify(sender).sendMessage(ChatColor.AQUA + "=== Config List ===");
-        verify(sender).sendMessage(ChatColor.AQUA + "version: v2.0.0, debugMode: false");
+        verify(sender).sendMessage(ChatColor.AQUA + "version: v2.0.0, debugMode: true");
     }
 
     @Test
