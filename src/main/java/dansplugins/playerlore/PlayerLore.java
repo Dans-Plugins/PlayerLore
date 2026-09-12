@@ -3,6 +3,7 @@ package dansplugins.playerlore;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import dansplugins.playerlore.services.ConfigService;
 import org.bukkit.command.Command;
@@ -13,6 +14,7 @@ import dansplugins.playerlore.commands.DefaultCommand;
 import dansplugins.playerlore.commands.EditCommand;
 import dansplugins.playerlore.commands.HelpCommand;
 import dansplugins.playerlore.commands.RemoveCommand;
+import dansplugins.playerlore.trace.TraceClient;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
@@ -26,6 +28,10 @@ public final class PlayerLore extends PonderBukkitPlugin {
     private final CommandService commandService = new CommandService(getPonder());
     private final ConfigService configService = new ConfigService(this);
 
+    // A no-op until the config has been read, so a command arriving before
+    // onEnable() finishes has something safe to report to.
+    private TraceClient trace = TraceClient.disabled();
+
     /**
      * This runs when the server starts.
      */
@@ -34,6 +40,7 @@ public final class PlayerLore extends PonderBukkitPlugin {
         initializeConfig();
         registerEventHandlers();
         initializeCommandService();
+        initializeUsageReporting();
     }
 
     /**
@@ -41,7 +48,7 @@ public final class PlayerLore extends PonderBukkitPlugin {
      */
     @Override
     public void onDisable() {
-
+        trace.close();
     }
 
     /**
@@ -54,6 +61,7 @@ public final class PlayerLore extends PonderBukkitPlugin {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        trace.report("command", null, Collections.singletonMap("name", cmd.getName()));
         if (args.length == 0) {
             DefaultCommand defaultCommand = new DefaultCommand(this);
             return defaultCommand.execute(sender);
@@ -132,5 +140,17 @@ public final class PlayerLore extends PonderBukkitPlugin {
                 new RemoveCommand()
         ));
         commandService.initialize(commands, "That command wasn't found.");
+    }
+
+    /**
+     * Starts usage reporting: one event now, one per command; see config.yml.
+     */
+    private void initializeUsageReporting() {
+        trace = TraceClient.builder(configService.getUsageReportingEndpoint(), getName())
+                .key(configService.getUsageReportingKey())
+                .enabled(configService.isUsageReportingEnabled())
+                .logger(getLogger())
+                .build();
+        trace.report("startup", null, Collections.singletonMap("version", getDescription().getVersion()));
     }
 }
