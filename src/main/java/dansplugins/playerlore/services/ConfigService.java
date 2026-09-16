@@ -2,6 +2,7 @@ package dansplugins.playerlore.services;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import dansplugins.playerlore.PlayerLore;
@@ -14,6 +15,7 @@ import dansplugins.playerlore.PlayerLore;
  *     - sendConfigList()
  */
 public class ConfigService {
+    private static final String USAGE_REPORTING_SECTION = "usage-reporting";
     private static final String USAGE_REPORTING_ENABLED_KEY = "usage-reporting.enabled";
     private static final String USAGE_REPORTING_ENDPOINT_KEY = "usage-reporting.endpoint";
     private static final String USAGE_REPORTING_KEY_KEY = "usage-reporting.key";
@@ -71,6 +73,27 @@ public class ConfigService {
 
     public boolean hasBeenAltered() {
         return altered;
+    }
+
+    /**
+     * Puts the usage-reporting block on disk if the file does not have one.
+     * saveMissingConfigDefaultsIfNotPresent only rewrites config.yml on a first
+     * run or a version mismatch, so a server upgraded in place from before usage
+     * reporting kept reporting through the bundled defaults (see the getters
+     * below) with no visible switch to turn it off. The values are copied from
+     * the jar's config.yml, not written as new literals, so the key and endpoint
+     * stay defined in one place.
+     */
+    public void saveUsageReportingDefaultsIfNotPresent() {
+        FileConfiguration config = getConfig();
+        Configuration defaults = config.getDefaults();
+        if (defaults == null || config.isSet(USAGE_REPORTING_SECTION)) {
+            return;
+        }
+        config.set(USAGE_REPORTING_ENABLED_KEY, defaults.get(USAGE_REPORTING_ENABLED_KEY));
+        config.set(USAGE_REPORTING_ENDPOINT_KEY, defaults.get(USAGE_REPORTING_ENDPOINT_KEY));
+        config.set(USAGE_REPORTING_KEY_KEY, defaults.get(USAGE_REPORTING_KEY_KEY));
+        playerLore.saveConfig();
     }
 
     // The usage-reporting options are read through the one-argument getters,
