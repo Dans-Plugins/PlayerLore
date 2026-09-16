@@ -4,11 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+import dansplugins.playerlore.PlayerLore;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,6 +99,50 @@ public class UsageReportingConfigTest {
         assertFalse(config.getBoolean("usage-reporting.enabled"));
         assertEquals("http://localhost:8080", config.getString("usage-reporting.endpoint"));
         assertEquals("abc", config.getString("usage-reporting.key"));
+    }
+
+    private YamlConfiguration reload(String written) {
+        YamlConfiguration reloaded = new YamlConfiguration();
+        try {
+            reloaded.loadFromString(written);
+        } catch (org.bukkit.configuration.InvalidConfigurationException e) {
+            throw new IllegalStateException(e);
+        }
+        return reloaded;
+    }
+
+    @Test
+    public void missingBlock_isWrittenToDiskFromTheBundledDefaults() {
+        // The in-place upgrade case: the getters fell through to the bundled key, but the file
+        // had no usage-reporting block, so the switch the console line points at did not exist.
+        YamlConfiguration config = loadWithBundledDefaults(PRE_EXISTING_FILE);
+        PlayerLore playerLore = mock(PlayerLore.class);
+        when(playerLore.getConfig()).thenReturn(config);
+
+        new ConfigService(playerLore).saveUsageReportingDefaultsIfNotPresent();
+
+        // copyDefaults is off here, so what saveToString() emits is exactly what is on disk.
+        YamlConfiguration reloaded = reload(config.saveToString());
+        assertTrue(reloaded.isSet("usage-reporting"));
+        assertTrue(reloaded.getBoolean("usage-reporting.enabled"));
+        assertEquals("https://trace.danielstephenson.dev", reloaded.getString("usage-reporting.endpoint"));
+        assertEquals(BUNDLED_KEY, reloaded.getString("usage-reporting.key"));
+        assertEquals("v1.1", reloaded.getString("version"));
+        verify(playerLore).saveConfig();
+    }
+
+    @Test
+    public void existingBlock_isLeftAloneAndNotResaved() {
+        YamlConfiguration config = loadWithBundledDefaults(PRE_EXISTING_FILE
+                + "usage-reporting:\n  enabled: false\n  endpoint: http://localhost:8080\n  key: abc\n");
+        PlayerLore playerLore = mock(PlayerLore.class);
+        when(playerLore.getConfig()).thenReturn(config);
+
+        new ConfigService(playerLore).saveUsageReportingDefaultsIfNotPresent();
+
+        assertFalse(config.getBoolean("usage-reporting.enabled"));
+        assertEquals("abc", config.getString("usage-reporting.key"));
+        verify(playerLore, never()).saveConfig();
     }
 
     @Test
