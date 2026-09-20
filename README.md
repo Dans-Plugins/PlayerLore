@@ -1,6 +1,10 @@
 # PlayerLore
 This open source plugin is intended to allow players to add lore to their items in Minecraft.
 
+## Download
+- [SpigotMC](https://www.spigotmc.org/resources/playerlore.98602/)
+- [GitHub releases](https://github.com/Dans-Plugins/PlayerLore/releases)
+
 ## Usage reporting
 
 PlayerLore reports its usage by default: when the plugin is enabled, and each time one of its commands is used, it sends its name, its version and the command's name to https://trace.danielstephenson.dev, so it is known which plugins are actually in use. Nothing about players, worlds, IP addresses or the server is sent, and neither is anything typed after a command.
