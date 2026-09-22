@@ -13,10 +13,13 @@ making any changes.
 
 ## Project Structure
 
-- `src/main/java/dansplugins/playerlore/` – Plugin source code
-- `src/main/java/dansplugins/playerlore/commands/` – Command handlers (AddCommand, EditCommand, RemoveCommand, HelpCommand)
+- `src/main/java/dansplugins/playerlore/` – Plugin source code (`PlayerLore` is the plugin main class)
+- `src/main/java/dansplugins/playerlore/commands/` – Command handlers (AddCommand, EditCommand, RemoveCommand, HelpCommand, DefaultCommand)
 - `src/main/java/dansplugins/playerlore/services/` – ConfigService
-- `src/main/resources/` – `plugin.yml`
+- `src/main/java/dansplugins/playerlore/trace/` – TraceClient (usage reporting)
+- `src/main/java/dansplugins/playerlore/utils/` – Logger
+- `src/main/resources/` – `plugin.yml` and the default `config.yml`
+- `src/test/java/dansplugins/playerlore/` – JUnit 5 tests, mirroring the main package layout
 
 ## Coding Conventions
 
