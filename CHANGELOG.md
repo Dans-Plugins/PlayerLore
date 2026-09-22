@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0] – 2026-09-19
+
 ### Added
 
-- The plugin now reports usage events — `startup` on enable, `command` on each of its commands — to the author's trace server so it is known which plugins are in use. Events carry the plugin name, the event name, and the plugin version or command name; nothing about players or the server. Reporting runs off the main thread, never delays a tick, drops silently when the server is unreachable, and is turned off with `usage-reporting.enabled: false` in `config.yml`. A `config.yml` now ships in the jar carrying the `usage-reporting` block and the plugin's key, so reporting is active out of the box unless turned off — including on servers upgraded from a version before the block existed, whose `config.yml` is only rewritten on a version change: the plugin reads the bundled defaults for any key the file lacks
+- The plugin now reports usage events — `startup` on enable, `command` on each of its commands — to the author's trace server so it is known which plugins are in use. Events carry the plugin name, the event name, and the plugin version or command name; nothing about players or the server. Reporting runs off the main thread, never delays a tick, and drops silently when the server is unreachable. A `config.yml` now ships in the jar carrying the `usage-reporting` block and the plugin's key, so reporting is active out of the box unless turned off; a server upgraded from a version before the block existed has it written into its `config.yml` on the next enable, so the switch is always on disk. The plugin logs on every enable whether reporting is on or off (and why). It is turned off with `usage-reporting.enabled: false` in this plugin's `config.yml`, for every plugin that reports to trace with `enabled: false` in `plugins/trace/config.yml` (created on the first start), or for the whole server process with the environment variable `TRACE_USAGE_REPORTING=off` or `DO_NOT_TRACK=1`
 - A `Dev Release` workflow, which republishes a rolling `dev` prerelease of `main` on every non-documentation push. This is what Dan's Plugin Manager's experimental channel installs from: `/dpm get playerlore --experimental` reads `releases/tags/dev`, so without it there is nothing for that command to download. The prerelease is unreleased, unreviewed code and is marked as such.
 
 ### Removed
