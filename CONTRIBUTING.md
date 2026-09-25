@@ -59,6 +59,12 @@ Windows:
 
     mvn clean package
 
+This also runs the unit tests. To run only the tests:
+
+    mvn test
+
+The tests use JUnit 5 and Mockito and live under `src/test/java/`, mirroring the package layout of `src/main/java/`. Add or update tests there for any change to behaviour that can be exercised without a running server. The `Build` workflow runs `mvn clean package` on every pull request, so a failing test blocks the build.
+
 For manual testing, place the built JAR from `target/` into a local Spigot server's `plugins` folder and restart the server.
 
 ## Questions
