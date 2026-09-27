@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- The usage-reporting comment in the bundled `config.yml` said every event carries the plugin version. Only the `startup` event does; a `command` event carries the command's name instead, as `CONFIG.md` and the README already state. The comment now says so.
+
 ## [2.0.0] – 2026-09-19
 
 ### Added
