@@ -9,10 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Usage reporting now honours server-wide tags: a `tags:` block in `plugins/trace/config.yml` is added to every event sent by each plugin on the server that reports this way (the release gates write `ci: "true"` there, so test-server boots are left out of real-installation figures). Nothing changes for a server without a `tags:` block. The vendored trace client is updated from 0.2.0 to 0.3.0.
-
-### Fixed
-
-- The usage-reporting comment in the bundled `config.yml` said every event carries the plugin version. Only the `startup` event does; a `command` event carries the command's name instead, as `CONFIG.md` and the README already state. The comment now says so.
+- Every usage-reporting event now carries the plugin version, so a `command` event can be tied to a release as well as a `startup` one; a `command` event still also carries the command's name. The vendored trace client is updated from 0.3.0 to 0.4.0, and the bundled `config.yml` comment and `CONFIG.md` say what each event carries.
 
 ## [2.0.0] – 2026-09-19
 
