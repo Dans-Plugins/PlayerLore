@@ -150,7 +150,7 @@ public final class PlayerLore extends PonderBukkitPlugin {
      */
     private void initializeUsageReporting() {
         configService.saveUsageReportingDefaultsIfNotPresent();
-        trace = TraceClient.builder(configService.getUsageReportingEndpoint(), getName())
+        trace = TraceClient.builder(configService.getUsageReportingEndpoint(), getName(), getDescription().getVersion())
                 .key(configService.getUsageReportingKey())
                 .enabled(configService.isUsageReportingEnabled())
                 .serverWideConfig(getDataFolder().getParentFile())
@@ -165,6 +165,6 @@ public final class PlayerLore extends PonderBukkitPlugin {
         } else {
             getLogger().info("Usage reporting is off (" + trace.disabledReason() + ").");
         }
-        trace.report("startup", null, Collections.singletonMap("version", getDescription().getVersion()));
+        trace.report("startup");
     }
 }
