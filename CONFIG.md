@@ -20,6 +20,20 @@ the server. Sending happens off the main thread, never delays a tick, and is dro
 server cannot be reached. On every enable the plugin logs whether reporting is on or, if it is off,
 why.
 
+`plugins/trace/config.yml` can also carry a `tags:` block, and every tag in it is added to each event
+sent by every plugin on the server that reports to trace. On a test or CI server, for example,
+`ci: "true"` keeps its events out of real-installation figures:
+
+```yaml
+enabled: true
+tags:
+  ci: "true"
+```
+
+A tag the plugin sets itself (`name`, `version`) wins over a server-wide tag with the same name. The
+block is read once, on enable, so a change takes effect after a restart. The file is created with the
+example commented out, so no tags are added unless one is uncommented or written in.
+
 To turn it off, in the order the plugin checks them:
 
 - for the whole server process: set the environment variable `TRACE_USAGE_REPORTING=off` (or `false`,
