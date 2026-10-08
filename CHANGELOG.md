@@ -8,7 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- `CONFIG.md` now says that `debugMode` currently has no effect, instead of describing debug logging the plugin never emits (tracked in #25). `COMMANDS.md` now says that the lore commands can only be used by a player.
+
+## [2.1.0] – 2026-10-07
+
+### Added
+
+- Minecraft 26.3 is now a supported version, listed in `minecraft-versions.json` and the README.
+
+### Changed
+
 - The usage-reporting "Details" link (startup notice, `config.yml` and the docs) now points at https://danielstephenson.dev/usage-reporting, a public page; the previous link led to a private repository and returned 404 for everyone. The vendored trace client is now 0.6.1, which carries the same link in the `plugins/trace/config.yml` header it writes. Details: https://github.com/Stephenson-Software/trace-client-java/releases/tag/0.6.1.
+- Every usage-reporting event now carries a random server ID, so servers can be counted rather than events. The first time reporting starts enabled, a `server-id` line is appended to `plugins/trace/config.yml`; it identifies no person, account or IP address, deleting the line gets a new one, and a disabled client never creates one. The vendored trace client is updated from 0.4.0 to 0.5.0, and the startup notice, `config.yml` comment, README and `CONFIG.md` mention the ID.
 - Usage reporting now honours server-wide tags: a `tags:` block in `plugins/trace/config.yml` is added to every event sent by each plugin on the server that reports this way (the release gates write `ci: "true"` there, so test-server boots are left out of real-installation figures). Nothing changes for a server without a `tags:` block. The vendored trace client is updated from 0.2.0 to 0.3.0. `CONFIG.md` describes the block under `## Usage reporting`.
 - Every usage-reporting event now carries the plugin version, so a `command` event can be tied to a release as well as a `startup` one; a `command` event still also carries the command's name. The vendored trace client is updated from 0.3.0 to 0.4.0, and the bundled `config.yml` comment and `CONFIG.md` say what each event carries.
 
