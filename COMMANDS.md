@@ -1,6 +1,6 @@
 # PlayerLore Commands
 
-All commands use `/pl` or `/playerlore` as the base. The lore commands (`add`, `edit`, `remove`) require the player to be holding the item they wish to modify.
+All commands use `/pl` or `/playerlore` as the base. The lore commands (`add`, `edit`, `remove`) can only be used by a player, and require the player to be holding the item they wish to modify in their main hand.
 
 | Command | Description | Permission |
 |---------|-------------|------------|
