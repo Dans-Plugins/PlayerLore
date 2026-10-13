@@ -3,7 +3,6 @@ package dansplugins.playerlore.commands;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -97,7 +96,7 @@ public class EditCommandTest {
         boolean result = editCommand.execute(player, new String[]{"0", "\"new line\""});
 
         assertFalse(result);
-        verify(player).sendMessage(anyString());
+        verify(player).sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
     }
 
     @Test
