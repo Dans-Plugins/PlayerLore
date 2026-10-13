@@ -64,6 +64,26 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_writesMetaBackToItemAndConfirms() {
+        when(itemMeta.getLore()).thenReturn(null);
+
+        addCommand.execute(player, new String[]{"\"new line\""});
+
+        verify(item).setItemMeta(itemMeta);
+        verify(player).sendMessage(ChatColor.GREEN + "Lore added.");
+    }
+
+    @Test
+    public void execute_joinsMultiWordQuotedLine() {
+        when(itemMeta.getLore()).thenReturn(null);
+
+        boolean result = addCommand.execute(player, new String[]{"\"forged", "in", "fire\""});
+
+        assertTrue(result);
+        verify(itemMeta).setLore(Arrays.asList(ChatColor.WHITE + "forged in fire"));
+    }
+
+    @Test
     public void execute_rejectsMissingArgs() {
         boolean result = addCommand.execute(player, new String[]{});
 

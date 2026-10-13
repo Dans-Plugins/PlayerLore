@@ -2,7 +2,9 @@ package dansplugins.playerlore.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -54,6 +56,39 @@ public class RemoveCommandTest {
     }
 
     @Test
+    public void execute_removesOnlyTheTargetedLine() {
+        List<String> lore = new ArrayList<>(Arrays.asList("first line", "second line", "third line"));
+        when(itemMeta.getLore()).thenReturn(lore);
+
+        boolean result = removeCommand.execute(player, new String[]{"2"});
+
+        assertTrue(result);
+        verify(itemMeta).setLore(Arrays.asList("first line", "third line"));
+    }
+
+    @Test
+    public void execute_writesMetaBackToItemAndConfirms() {
+        List<String> lore = new ArrayList<>(Arrays.asList("first line"));
+        when(itemMeta.getLore()).thenReturn(lore);
+
+        removeCommand.execute(player, new String[]{"1"});
+
+        verify(item).setItemMeta(itemMeta);
+        verify(player).sendMessage(ChatColor.GREEN + "Line removed.");
+    }
+
+    @Test
+    public void execute_rejectsItemWithNoLore() {
+        when(itemMeta.getLore()).thenReturn(null);
+
+        boolean result = removeCommand.execute(player, new String[]{"1"});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
+        verify(item, never()).setItemMeta(any());
+    }
+
+    @Test
     public void execute_rejectsIndexBelow1() {
         List<String> lore = new ArrayList<>(Arrays.asList("first line"));
         when(itemMeta.getLore()).thenReturn(lore);
@@ -61,6 +96,7 @@ public class RemoveCommandTest {
         boolean result = removeCommand.execute(player, new String[]{"0"});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
     }
 
     @Test
@@ -71,6 +107,8 @@ public class RemoveCommandTest {
         boolean result = removeCommand.execute(player, new String[]{"2"});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
+        verify(item, never()).setItemMeta(any());
     }
 
     @Test
@@ -78,6 +116,7 @@ public class RemoveCommandTest {
         boolean result = removeCommand.execute(player, new String[]{"abc"});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Line index must be a number.");
     }
 
     @Test

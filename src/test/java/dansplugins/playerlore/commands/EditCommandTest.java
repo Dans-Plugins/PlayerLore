@@ -2,8 +2,10 @@ package dansplugins.playerlore.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -55,6 +57,39 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_editsOnlyTheTargetedLine() {
+        List<String> lore = new ArrayList<>(Arrays.asList("first line", "second line", "third line"));
+        when(itemMeta.getLore()).thenReturn(lore);
+
+        boolean result = editCommand.execute(player, new String[]{"2", "\"new line\""});
+
+        assertTrue(result);
+        verify(itemMeta).setLore(Arrays.asList("first line", ChatColor.WHITE + "new line", "third line"));
+    }
+
+    @Test
+    public void execute_writesMetaBackToItemAndConfirms() {
+        List<String> lore = new ArrayList<>(Arrays.asList("original line"));
+        when(itemMeta.getLore()).thenReturn(lore);
+
+        editCommand.execute(player, new String[]{"1", "\"new line\""});
+
+        verify(item).setItemMeta(itemMeta);
+        verify(player).sendMessage(ChatColor.GREEN + "Line edited.");
+    }
+
+    @Test
+    public void execute_rejectsItemWithNoLore() {
+        when(itemMeta.getLore()).thenReturn(null);
+
+        boolean result = editCommand.execute(player, new String[]{"1", "\"new line\""});
+
+        assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
+        verify(item, never()).setItemMeta(any());
+    }
+
+    @Test
     public void execute_rejectsIndexBelow1() {
         List<String> lore = new ArrayList<>(Arrays.asList("original line"));
         when(itemMeta.getLore()).thenReturn(lore);
@@ -73,6 +108,8 @@ public class EditCommandTest {
         boolean result = editCommand.execute(player, new String[]{"2", "\"new line\""});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "There aren't that many lines of lore.");
+        verify(item, never()).setItemMeta(any());
     }
 
     @Test
@@ -80,6 +117,7 @@ public class EditCommandTest {
         boolean result = editCommand.execute(player, new String[]{"abc", "\"new line\""});
 
         assertFalse(result);
+        verify(player).sendMessage(ChatColor.RED + "Line index must be a number.");
     }
 
     @Test
