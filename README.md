@@ -1,4 +1,9 @@
 # PlayerLore
+
+![Two /pl add commands on an iron sword, and the sword's tooltip showing both lines of lore](docs/images/adding-lore.png)
+
+*Real in-game output from PlayerLore 2.1.2 on a local throwaway Paper 1.21.11 test server: the commands were typed by a scripted bot client, and the chat it received is drawn as Minecraft-style chat (typed commands appear in the input bars; grey lines say what happened between commands).*
+
 This open source plugin is intended to allow players to add lore to their items in Minecraft.
 
 ## Supported Minecraft Versions
