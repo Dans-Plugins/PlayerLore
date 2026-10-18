@@ -8,9 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [2.1.2] – 2026-10-17
 
-### Changed
-
-- No change to the plugin's behaviour, configuration or documentation. `PlayerLore.isVersionMismatched`, which decides whether `config.yml` is rewritten on enable, is now covered by unit tests.
+No user-facing changes.
 
 ## [2.1.1] – 2026-10-15
 
