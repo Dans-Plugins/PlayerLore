@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.1.2] – 2026-10-17
+
+No user-facing changes.
+
+## [2.1.1] – 2026-10-15
+
 ### Changed
 
 - `CONFIG.md` now says that `debugMode` currently has no effect, instead of describing debug logging the plugin never emits (tracked in #25). `COMMANDS.md` now says that the lore commands can only be used by a player.
