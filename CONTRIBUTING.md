@@ -13,6 +13,7 @@ Thank you for your interest in contributing to PlayerLore! This guide will help 
 
 - A GitHub account
 - Git installed on your local machine
+- JDK 17 (the version the `Build` workflow uses) and Maven
 - A Java IDE or text editor
 - A basic understanding of Java
 
@@ -33,7 +34,7 @@ Work items are tracked as [GitHub issues](https://github.com/Dans-Plugins/Player
 
 ### Milestones
 
-Issues are grouped into [milestones](https://github.com/Dans-Plugins/PlayerLore/milestones) representing upcoming releases.
+Open issues are not currently assigned to [milestones](https://github.com/Dans-Plugins/PlayerLore/milestones); the open issue list is the work queue.
 
 ## Making Changes
 

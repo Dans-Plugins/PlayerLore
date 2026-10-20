@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- `CONTRIBUTING.md` now lists JDK 17 and Maven among the requirements for building the plugin, and no longer says that issues are grouped into milestones: the only milestone is the closed-out `v1.2.0`, and no open issue is assigned to one.
+
 ## [2.1.2] – 2026-10-17
 
 No user-facing changes.
