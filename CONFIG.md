@@ -4,7 +4,7 @@ The configuration file is located at `plugins/PlayerLore/config.yml`.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `version` | String | *(plugin version)* | Plugin version. Do not edit manually. |
+| `version` | String | *(plugin version, prefixed with `v`, e.g. `v2.1.2`)* | The plugin version that last wrote this file. Do not edit manually: on enable, a value that differs from the running plugin's version (ignoring case) is treated as a version change (upgrade or downgrade), and the file is rewritten with the current version and any missing defaults. |
 | `debugMode` | Boolean | `false` | Intended to enable verbose debug logging to the console, but currently has no effect: the plugin emits no debug output whatever its value ([#25](https://github.com/Dans-Plugins/PlayerLore/issues/25)). |
 | `usage-reporting.enabled` | Boolean | `true` | Whether the plugin reports usage events (see below). Set to `false` to turn it off. |
 | `usage-reporting.endpoint` | String | `https://trace.danielstephenson.dev` | The trace server events are sent to. |
