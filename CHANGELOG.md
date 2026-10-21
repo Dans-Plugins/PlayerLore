@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - `CONTRIBUTING.md` now lists JDK 17 and Maven among the requirements for building the plugin, and no longer says that issues are grouped into milestones: the only milestone, `v1.2.0`, holds a single closed issue, and no open issue is assigned to one.
+- `CONFIG.md` now says that the `version` option is written with a leading `v` (for example `v2.1.2`), and what happens on enable when it differs from the running plugin's version.
 
 ## [2.1.2] – 2026-10-17
 
