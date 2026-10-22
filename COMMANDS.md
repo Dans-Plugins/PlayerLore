@@ -2,6 +2,8 @@
 
 All commands use `/pl` or `/playerlore` as the base. The lore commands (`add`, `edit`, `remove`) can only be used by a player, and require the player to be holding the item they wish to modify in their main hand.
 
+The lore text given to `add` and `edit` must be in double quotes; if more than one quoted section is given, only the first is used. Lines are written in white, and `&` colour codes are not translated, so they appear in the lore as typed.
+
 | Command | Description | Permission |
 |---------|-------------|------------|
 | `/pl` | View the plugin version, credits and wiki link. | *(none)* |
