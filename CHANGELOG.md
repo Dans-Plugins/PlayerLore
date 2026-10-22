@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - `CONTRIBUTING.md` now lists JDK 17 and Maven among the requirements for building the plugin, and no longer says that issues are grouped into milestones: the only milestone, `v1.2.0`, holds a single closed issue, and no open issue is assigned to one.
 - `CONFIG.md` now says that the `version` option is written with a leading `v` (for example `v2.1.2`), and what happens on enable when it differs from the running plugin's version.
+- `COMMANDS.md` now says that lore text must be in double quotes (only the first quoted section is used), that lines are written in white, and that `&` colour codes are not translated. `CONFIG.md`, the README and the comment in the bundled `config.yml` now say that a `command` usage event carries the base command typed (`pl` or `playerlore`), never the subcommand.
 
 ## [2.1.2] – 2026-10-17
 
