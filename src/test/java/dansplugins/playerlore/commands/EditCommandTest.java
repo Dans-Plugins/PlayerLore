@@ -67,6 +67,28 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_usesOnlyTheFirstQuotedSection() {
+        List<String> lore = new ArrayList<>(Arrays.asList("original line"));
+        when(itemMeta.getLore()).thenReturn(lore);
+
+        boolean result = editCommand.execute(player, new String[]{"1", "\"first\"", "\"second\""});
+
+        assertTrue(result);
+        verify(itemMeta).setLore(Arrays.asList(ChatColor.WHITE + "first"));
+    }
+
+    @Test
+    public void execute_leavesAmpersandColourCodesUntranslated() {
+        List<String> lore = new ArrayList<>(Arrays.asList("original line"));
+        when(itemMeta.getLore()).thenReturn(lore);
+
+        boolean result = editCommand.execute(player, new String[]{"1", "\"&cred", "text\""});
+
+        assertTrue(result);
+        verify(itemMeta).setLore(Arrays.asList(ChatColor.WHITE + "&cred text"));
+    }
+
+    @Test
     public void execute_writesMetaBackToItemAndConfirms() {
         List<String> lore = new ArrayList<>(Arrays.asList("original line"));
         when(itemMeta.getLore()).thenReturn(lore);
