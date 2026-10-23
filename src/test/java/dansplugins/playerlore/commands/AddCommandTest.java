@@ -84,6 +84,26 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_usesOnlyTheFirstQuotedSection() {
+        when(itemMeta.getLore()).thenReturn(null);
+
+        boolean result = addCommand.execute(player, new String[]{"\"first\"", "\"second\""});
+
+        assertTrue(result);
+        verify(itemMeta).setLore(Arrays.asList(ChatColor.WHITE + "first"));
+    }
+
+    @Test
+    public void execute_leavesAmpersandColourCodesUntranslated() {
+        when(itemMeta.getLore()).thenReturn(null);
+
+        boolean result = addCommand.execute(player, new String[]{"\"&cred", "text\""});
+
+        assertTrue(result);
+        verify(itemMeta).setLore(Arrays.asList(ChatColor.WHITE + "&cred text"));
+    }
+
+    @Test
     public void execute_rejectsMissingArgs() {
         boolean result = addCommand.execute(player, new String[]{});
 
