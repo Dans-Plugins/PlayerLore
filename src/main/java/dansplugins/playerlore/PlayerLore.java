@@ -8,6 +8,7 @@ import java.util.Collections;
 import dansplugins.playerlore.services.ConfigService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import dansplugins.playerlore.commands.AddCommand;
 import dansplugins.playerlore.commands.DefaultCommand;
@@ -61,7 +62,10 @@ public final class PlayerLore extends PonderBukkitPlugin {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        trace.report("command", null, Collections.singletonMap("name", cmd.getName()));
+        // Console, command-block and plugin-dispatched commands are not counted.
+        if (sender instanceof Player) {
+            trace.report("command", null, Collections.singletonMap("name", cmd.getName()));
+        }
         if (args.length == 0) {
             DefaultCommand defaultCommand = new DefaultCommand(this);
             return defaultCommand.execute(sender);

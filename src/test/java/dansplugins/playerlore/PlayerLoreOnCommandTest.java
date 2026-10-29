@@ -16,13 +16,14 @@ import dansplugins.playerlore.trace.TraceClient;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
 
 // onCommand is the single entry point for /pl and /playerlore. It sends a bare
 // /pl straight to DefaultCommand, bypassing the command service, and reports
-// every command to trace -- with the command's name only, which is what the
+// every command a player runs to trace -- with the command's name only, which is what the
 // README's "neither is anything typed after a command" promise rests on.
 public class PlayerLoreOnCommandTest {
 
@@ -37,7 +38,7 @@ public class PlayerLoreOnCommandTest {
         playerLore = mock(PlayerLore.class);
         commandService = mock(CommandService.class);
         trace = mock(TraceClient.class);
-        sender = mock(CommandSender.class);
+        sender = mock(Player.class);
         command = mock(Command.class);
 
         // A mock runs no field initializers, so the collaborators onCommand uses are put in by hand.
@@ -113,5 +114,15 @@ public class PlayerLoreOnCommandTest {
         playerLore.onCommand(sender, command, "PL", new String[]{});
 
         verify(trace).report("command", null, Collections.singletonMap("name", "playerlore"));
+    }
+
+    @Test
+    public void onCommand_fromANonPlayer_reportsNothing() {
+        // Console, command-block and plugin-dispatched commands are not counted.
+        CommandSender console = mock(CommandSender.class);
+
+        playerLore.onCommand(console, command, "pl", new String[]{});
+
+        verify(trace, never()).report(anyString(), any(), any());
     }
 }

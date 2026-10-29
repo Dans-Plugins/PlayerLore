@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Usage reporting now batches repeated events: the first use of a command is still sent at once, but further uses of the same base command within the next 60 seconds are counted and sent as one event tagged `coalesced` with the count, so a command used without pause sends one event a minute. `startup` events are never batched. The vendored trace client is updated from 0.6.1 to 0.7.0, and the bundled `config.yml` comment, README and `CONFIG.md` describe the batching. Details: https://github.com/Stephenson-Software/trace-client-java/releases/tag/0.7.0.
+- Usage reporting now counts a `command` event only when a player runs the command; console, command-block and plugin-dispatched commands are no longer reported.
 
 ## [2.1.3] – 2026-10-28
 
