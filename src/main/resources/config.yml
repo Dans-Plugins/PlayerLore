@@ -2,7 +2,8 @@
 # commands is used, a small event (plugin name, event name, plugin version, and
 # on use the base command typed, pl or playerlore, never the subcommand) is
 # sent to the author's trace server so it is known which plugins are actually
-# in use. Each event also carries a random
+# in use. Repeated uses within 60 seconds are counted and sent as one event,
+# tagged coalesced with the count. Each event also carries a random
 # server ID (the server-id line in plugins/trace/config.yml) so servers can be
 # counted; it identifies no person, account or IP address. Nothing about
 # players is included. Sending happens off the main thread, never blocks a

@@ -20,7 +20,10 @@ never the subcommand or its arguments), plus a random server ID (the
 `server-id` line in `plugins/trace/config.yml`, which identifies no person, account or IP address; deleting the
 line gets a new one) — nothing about players or the world. Sending happens off the main thread, never delays a
 tick, and is dropped silently if the
-server cannot be reached. On every enable the plugin logs whether reporting is on or, if it is off,
+server cannot be reached. Repeats are batched: the first use of a command is sent at once, and further
+uses of the same base command within the next 60 seconds are counted and sent as one event tagged `coalesced` with the
+count, so a command used without pause costs one event a minute. A `startup` event is always sent at
+once. On every enable the plugin logs whether reporting is on or, if it is off,
 why.
 
 `plugins/trace/config.yml` can also carry a `tags:` block, and every tag in it is added to each event
