@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Usage reporting now batches repeated events: the first use of a command is still sent at once, but further uses of the same base command within the next 60 seconds are counted and sent as one event tagged `coalesced` with the count, so a command used without pause sends one event a minute. `startup` events are never batched. The vendored trace client is updated from 0.6.1 to 0.7.0, and the bundled `config.yml` comment, README and `CONFIG.md` describe the batching. Details: https://github.com/Stephenson-Software/trace-client-java/releases/tag/0.7.0.
+
+## [2.1.3] – 2026-10-28
+
+### Changed
+
 - `CONTRIBUTING.md` now lists JDK 17 and Maven among the requirements for building the plugin, and no longer says that issues are grouped into milestones: the only milestone, `v1.2.0`, holds a single closed issue, and no open issue is assigned to one.
 - `CONFIG.md` now says that the `version` option is written with a leading `v` (for example `v2.1.2`), and what happens on enable when it differs from the running plugin's version.
 - `COMMANDS.md` now says that lore text must be in double quotes (only the first quoted section is used), that lines are written in white, and that `&` colour codes are not translated. `CONFIG.md`, the README and the comment in the bundled `config.yml` now say that a `command` usage event carries the base command typed (`pl` or `playerlore`), never the subcommand.
