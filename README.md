@@ -27,7 +27,7 @@ Every plugin above is listed on [dansplugins.com](https://dansplugins.com). Play
 
 ## Usage reporting
 
-PlayerLore reports its usage by default: when the plugin is enabled, and each time one of its commands is used, it sends its name, its version and the base command typed (`pl` or `playerlore`, never the subcommand) to https://trace.danielstephenson.dev, so it is known which plugins are actually in use. Nothing about players, worlds or IP addresses is sent, and neither is anything typed after a command. Repeated uses of a command within 60 seconds are counted and sent as one event, rather than one event each.
+PlayerLore reports its usage by default: when the plugin is enabled, and each time a player uses one of its commands, it sends its name, its version and the base command typed (`pl` or `playerlore`, never the subcommand) to https://trace.danielstephenson.dev, so it is known which plugins are actually in use. Nothing about players, worlds or IP addresses is sent, and neither is anything typed after a command. Repeated uses of a command within 60 seconds are counted and sent as one event, rather than one event each. Commands run from the console, a command block or another plugin are not reported.
 
 Each event also carries a random server ID (the `server-id` line in `plugins/trace/config.yml`) so
 servers can be counted rather than events. It identifies no person, account or IP address; delete
