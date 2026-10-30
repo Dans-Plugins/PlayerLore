@@ -12,9 +12,10 @@ The configuration file is located at `plugins/PlayerLore/config.yml`.
 
 ## Usage reporting
 
-When the plugin is enabled, and each time one of its commands is used, a small event is sent to the
+When the plugin is enabled, and each time a player uses one of its commands, a small event is sent to the
 author's [trace](https://danielstephenson.dev/usage-reporting) server so it is known
-which plugins are actually in use. An event carries the plugin's name, the event name (`startup` or
+which plugins are actually in use. Commands run from the console, a command block or another plugin
+are not reported. An event carries the plugin's name, the event name (`startup` or
 `command`), the plugin version, and for a `command` event the base command typed (`pl` or `playerlore`,
 never the subcommand or its arguments), plus a random server ID (the
 `server-id` line in `plugins/trace/config.yml`, which identifies no person, account or IP address; deleting the
