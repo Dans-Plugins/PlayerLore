@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Usage reporting could be turned back on after an operator had turned it off. A quoted `enabled: "false"` (or any value that is not a boolean) was read as the bundled default, `true`; and a `config.yml` that Bukkit could not parse was loaded as empty, so the defaults pass or the usage-reporting block written on startup could replace the operator's whole file with the defaults (`enabled: true`). Now only `true`, `on` or `yes` turns reporting on, `config.yml` on disk is checked when deciding and before every save (an opt-out found there is kept, even one written while the server was running), and a `config.yml` that cannot be parsed is never overwritten: an error is logged and reporting stays off until it is fixed.
+- The vendored trace client is now 0.8.0, in which every opt-out fails closed: in `plugins/trace/config.yml` a quoted `enabled: "false"`, an empty `enabled:`, a typo, or a file that is there but cannot be read now turn reporting off; `TRACE_USAGE_REPORTING` set to anything but blank or `true`/`on`/`yes`/`1`, and `DO_NOT_TRACK` set to anything but blank or `0`/`false`/`off`/`no`, now turn it off too. Details: https://github.com/Stephenson-Software/trace-client-java/pull/51
+
 ## [2.1.4] – 2026-10-31
 
 ### Changed

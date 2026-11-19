@@ -16,6 +16,7 @@ import dansplugins.playerlore.commands.EditCommand;
 import dansplugins.playerlore.commands.HelpCommand;
 import dansplugins.playerlore.commands.RemoveCommand;
 import dansplugins.playerlore.trace.TraceClient;
+import dansplugins.playerlore.trace.UsageReportingSetting;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
@@ -42,6 +43,22 @@ public final class PlayerLore extends PonderBukkitPlugin {
         registerEventHandlers();
         initializeCommandService();
         initializeUsageReporting();
+    }
+
+    /**
+     * Writes the loaded config to config.yml without ever turning usage reporting back on. Every
+     * save goes through here: the defaults pass and the usage-reporting block written on upgrade.
+     * A config.yml Bukkit could not parse was loaded as empty, so saving would replace the
+     * operator's whole file (an opt-out included) with the defaults: it is left alone and an error
+     * is logged. And the loaded config can be older than the file, since an operator may set
+     * usage-reporting.enabled: false by hand while the server runs, so an opt-out on disk is
+     * carried into it first.
+     */
+    @Override
+    public void saveConfig() {
+        if (UsageReportingSetting.prepareToSave(getConfig(), new File(getDataFolder(), "config.yml"), getLogger())) {
+            super.saveConfig();
+        }
     }
 
     /**

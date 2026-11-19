@@ -18,6 +18,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import dansplugins.playerlore.PlayerLore;
 
@@ -231,7 +235,7 @@ public class ConfigServiceTest {
         // block in its config.yml. Bukkit's one-argument getters fall through
         // to the jar's defaults; the two-argument ones would return their
         // fallback and turn reporting off on every existing installation.
-        when(config.getBoolean("usage-reporting.enabled")).thenReturn(true);
+        when(config.get("usage-reporting.enabled")).thenReturn(true);
         when(config.getString("usage-reporting.endpoint")).thenReturn("https://trace.danielstephenson.dev");
         when(config.getString("usage-reporting.key")).thenReturn("bundled-key");
 
@@ -254,12 +258,34 @@ public class ConfigServiceTest {
 
     @Test
     public void usageReporting_readsTheConfiguredValues() {
-        when(config.getBoolean("usage-reporting.enabled")).thenReturn(false);
+        when(config.get("usage-reporting.enabled")).thenReturn(false);
         when(config.getString("usage-reporting.endpoint")).thenReturn("http://localhost:8080");
         when(config.getString("usage-reporting.key")).thenReturn("abc");
 
         assertFalse(configService.isUsageReportingEnabled());
         assertEquals("http://localhost:8080", configService.getUsageReportingEndpoint());
         assertEquals("abc", configService.getUsageReportingKey());
+    }
+
+    /**
+     * An operator who sets enabled: false by hand while the server runs, or writes it quoted, must
+     * find reporting off: the loaded config (still true) must not win over config.yml on disk.
+     */
+    @Test
+    public void usageReporting_anOptOutOnDiskWinsOverTheLoadedConfig(@TempDir Path dataFolder) throws Exception {
+        when(playerLore.getDataFolder()).thenReturn(dataFolder.toFile());
+        when(config.get("usage-reporting.enabled")).thenReturn(true);
+        assertTrue(configService.isUsageReportingEnabled());
+
+        Files.write(dataFolder.resolve("config.yml"), "usage-reporting:\n  enabled: \"false\"\n".getBytes(StandardCharsets.UTF_8));
+
+        assertFalse(configService.isUsageReportingEnabled());
+    }
+
+    @Test
+    public void usageReporting_aQuotedFalseInTheLoadedConfigIsOff() {
+        when(config.get("usage-reporting.enabled")).thenReturn("false");
+
+        assertFalse(configService.isUsageReportingEnabled());
     }
 }

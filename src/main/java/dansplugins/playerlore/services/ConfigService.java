@@ -6,6 +6,9 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import dansplugins.playerlore.PlayerLore;
+import dansplugins.playerlore.trace.UsageReportingSetting;
+
+import java.io.File;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -107,8 +110,14 @@ public class ConfigService {
     // every existing installation. Verified against YamlConfiguration in
     // UsageReportingConfigTest, not assumed.
 
+    /**
+     * Fails closed: only a value that clearly means "on" turns reporting on (getBoolean() would
+     * read a quoted "false" as the bundled true), and config.yml as it is on disk right now must
+     * allow it too, so neither a stale loaded copy nor Bukkit's fallback to the defaults for a
+     * file it could not parse can override an opt-out.
+     */
     public boolean isUsageReportingEnabled() {
-        return getBoolean(USAGE_REPORTING_ENABLED_KEY);
+        return UsageReportingSetting.isEnabled(getConfig(), new File(playerLore.getDataFolder(), "config.yml"));
     }
 
     public String getUsageReportingEndpoint() {
