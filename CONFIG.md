@@ -48,6 +48,10 @@ To turn it off, in the order the plugin checks them:
 - for every plugin on the server that reports to trace: set `enabled: false` in
   `plugins/trace/config.yml`, which the plugin creates on the first start if it does not exist;
 - for this plugin only: set `usage-reporting.enabled` to `false` in `plugins/PlayerLore/config.yml`.
+  Only `true` (or `on`, `yes`) turns it on; any other value, including a quoted `"false"`, turns it
+  off. Once turned off it stays off: the plugin never writes `config.yml` back with reporting on, even
+  if the file was edited while the server was running, and never overwrites a `config.yml` it cannot
+  parse (it logs an error instead, and reporting stays off until the file is fixed).
 
 The `usage-reporting` block is written to `config.yml` on a first run, when the plugin version
 changes, and — if a `config.yml` from before the block existed lacks it — on the next enable, so the
